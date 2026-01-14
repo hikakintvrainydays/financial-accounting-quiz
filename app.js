@@ -21,6 +21,12 @@ const App = {
     sessionAnswers: [],
     currentStreak: 0,  // 連続正解カウンタ
 
+    // 論述モード状態
+    essayData: [],
+    currentEssayIndex: 0,
+    currentEssayStep: 'lecture', // 'lecture', 'write', 'result'
+    userEssayAnswer: '',
+
     // 〇✕カウンタ
     correctCount: 0,
     incorrectCount: 0,
@@ -272,6 +278,19 @@ function setupEventListeners() {
     document.getElementById('calc-submit-btn').addEventListener('click', submitCalculation);
     document.getElementById('calc-next-btn').addEventListener('click', nextCalculation);
 
+    // 論述モード関連
+    document.getElementById('to-write-btn').addEventListener('click', showEssayWrite);
+    document.getElementById('back-to-lecture-btn').addEventListener('click', showEssayLecture);
+    document.getElementById('essay-hint-btn').addEventListener('click', () => {
+        const keywords = document.getElementById('essay-keywords');
+        keywords.classList.toggle('hidden');
+    });
+    document.getElementById('submit-essay-btn').addEventListener('click', submitEssay);
+    document.querySelectorAll('.eval-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => evaluateEssay(parseInt(e.target.dataset.eval)));
+    });
+    document.getElementById('next-essay-btn').addEventListener('click', nextEssay);
+
     // 結果画面
     document.getElementById('retry-btn').addEventListener('click', retrySession);
     document.getElementById('back-home-btn').addEventListener('click', () => showScreen('home-screen'));
@@ -353,6 +372,10 @@ function showQuestionCountModal(mode) {
 // モード開始
 // ===========================================
 function startMode(mode) {
+    if (mode === 'essay') {
+        actuallyStartMode(mode);
+        return;
+    }
     // 問題数選択モーダルを表示
     showQuestionCountModal(mode);
 }
@@ -385,6 +408,9 @@ function actuallyStartMode(mode) {
         case 'calculation':
             filteredQuestions = App.questions.filter(q => q.type === 'calculation');
             break;
+        case 'essay':
+            startEssayMode();
+            return; // 独自の初期化を行うためここで終了
     }
 
     // シャッフルして選択された問題数分を取得
@@ -1237,6 +1263,15 @@ function loadReviewSchedule() {
     }
 }
 
+function loadEssayHistory() {
+    const saved = localStorage.getItem('essayHistory');
+    if (saved) {
+        App.essayHistory = JSON.parse(saved);
+    } else {
+        App.essayHistory = {};
+    }
+}
+
 function saveReviewSchedule() {
     localStorage.setItem('reviewSchedule', JSON.stringify(App.reviewSchedule));
 }
@@ -1312,4 +1347,169 @@ function startReviewMode() {
 
     showScreen('quiz-screen');
     showQuizQuestion();
+}
+
+// ===========================================
+// 論述記述マスターモード（機能強化）
+// ===========================================
+function startEssayMode() {
+    if (!window.ESSAY_DATA) {
+        alert('論述データが見つかりません');
+        return;
+    }
+
+    App.currentMode = 'essay';
+    App.essayData = ESSAY_DATA.topics;
+    App.currentEssayIndex = 0;
+    loadEssayHistory();
+
+    showScreen('essay-screen');
+    showEssayLecture();
+}
+
+/** 
+ * 解説ステップ表示
+ */
+function showEssayLecture() {
+    App.currentEssayStep = 'lecture';
+    const topic = App.essayData[App.currentEssayIndex];
+
+    // 進捗表示
+    document.getElementById('essay-progress').textContent = `テーマ ${App.currentEssayIndex + 1}/${App.essayData.length}`;
+    document.getElementById('essay-category-badge').textContent = topic.category;
+    document.getElementById('essay-title').textContent = topic.title;
+
+    // ステップ表示切り替え
+    document.getElementById('essay-step-lecture').classList.add('active');
+    document.getElementById('essay-step-lecture').classList.remove('hidden');
+    document.getElementById('essay-step-write').classList.remove('active');
+    document.getElementById('essay-step-write').classList.add('hidden');
+    document.getElementById('essay-step-result').classList.remove('active');
+    document.getElementById('essay-step-result').classList.add('hidden');
+
+    // 吹き出し生成
+    const container = document.getElementById('lecture-container');
+    container.innerHTML = '';
+
+    topic.lecture.dialogue.forEach((line, index) => {
+        const bubble = document.createElement('div');
+        bubble.className = `chat-bubble ${line.speaker === 'student' ? 'right' : 'left'}`;
+        bubble.style.animationDelay = `${index * 0.5}s`;
+
+        bubble.innerHTML = `
+            <div class="chat-icon">${line.icon}</div>
+            <div class="chat-content">
+                <span class="chat-name">${line.name}</span>
+                <div class="chat-text">${line.text}</div>
+            </div>
+        `;
+        container.appendChild(bubble);
+    });
+}
+
+/**
+ * 記述ステップ表示
+ */
+function showEssayWrite() {
+    App.currentEssayStep = 'write';
+    const topic = App.essayData[App.currentEssayIndex];
+
+    document.getElementById('essay-step-lecture').classList.remove('active');
+    document.getElementById('essay-step-lecture').classList.add('hidden');
+    document.getElementById('essay-step-write').classList.add('active');
+    document.getElementById('essay-step-write').classList.remove('hidden');
+
+    document.getElementById('essay-question-text').textContent = topic.question;
+
+    // 入力欄リセットまたは履歴から復元
+    const savedAnswer = App.essayHistory[topic.id]?.lastAnswer || '';
+    document.getElementById('essay-answer-input').value = savedAnswer;
+
+    // キーワードヒント生成
+    const keywordsContainer = document.getElementById('essay-keywords');
+    keywordsContainer.innerHTML = '';
+    topic.keywords.forEach(keyword => {
+        const tag = document.createElement('span');
+        tag.className = 'keyword-tag';
+        tag.textContent = keyword;
+        keywordsContainer.appendChild(tag);
+    });
+
+    keywordsContainer.classList.add('hidden');
+}
+
+/**
+ * 提出処理
+ */
+function submitEssay() {
+    const answer = document.getElementById('essay-answer-input').value;
+    if (!answer.trim()) {
+        alert('回答を入力してください！');
+        return;
+    }
+    App.userEssayAnswer = answer;
+    showEssayResult();
+}
+
+/**
+ * 結果比較ステップ表示
+ */
+function showEssayResult() {
+    App.currentEssayStep = 'result';
+    const topic = App.essayData[App.currentEssayIndex];
+
+    document.getElementById('essay-step-write').classList.remove('active');
+    document.getElementById('essay-step-write').classList.add('hidden');
+    document.getElementById('essay-step-result').classList.add('active');
+    document.getElementById('essay-step-result').classList.remove('hidden');
+
+    document.getElementById('your-essay-display').textContent = App.userEssayAnswer;
+    document.getElementById('model-essay-display').textContent = topic.modelAnswer;
+
+    // ボタン状態リセット
+    document.querySelectorAll('.eval-btn').forEach(btn => btn.classList.remove('selected'));
+    document.getElementById('next-essay-btn').classList.add('hidden');
+}
+
+/**
+ * 自己採点と保存
+ */
+function evaluateEssay(score) {
+    const topic = App.essayData[App.currentEssayIndex];
+
+    // UI反映
+    document.querySelectorAll('.eval-btn').forEach(btn => {
+        if (parseInt(btn.dataset.eval) === score) {
+            btn.classList.add('selected');
+        } else {
+            btn.classList.remove('selected');
+        }
+    });
+
+    // 保存
+    if (!App.essayHistory) App.essayHistory = {};
+
+    App.essayHistory[topic.id] = {
+        essayId: topic.id,
+        lastAnswer: App.userEssayAnswer,
+        score: score, // 3:完璧, 2:まあまあ, 1:要復習
+        date: Date.now()
+    };
+
+    localStorage.setItem('essayHistory', JSON.stringify(App.essayHistory));
+
+    document.getElementById('next-essay-btn').classList.remove('hidden');
+}
+
+/**
+ * 次のテーマへ
+ */
+function nextEssay() {
+    App.currentEssayIndex++;
+    if (App.currentEssayIndex >= App.essayData.length) {
+        alert('🎉 全テーマの学習が完了しました！お疲れ様でした！');
+        showScreen('home-screen');
+    } else {
+        showEssayLecture();
+    }
 }

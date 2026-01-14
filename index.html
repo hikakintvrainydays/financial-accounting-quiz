@@ -108,6 +108,11 @@
                             <span class="mode-title">計算ドリル</span>
                             <span class="mode-desc">CF計算・工事進行基準</span>
                         </button>
+                        <button class="mode-card" data-mode="essay">
+                            <span class="mode-icon">📝</span>
+                            <span class="mode-title">記述マスター</span>
+                            <span class="mode-desc">解説→記述で記述力UP</span>
+                        </button>
                     </div>
                 </div>
 
@@ -326,6 +331,78 @@
                     </div>
                 </div>
             </section>
+            <!-- 論述記述マスター画面 -->
+            <section id="essay-screen" class="screen">
+                <div class="essay-header">
+                    <button class="back-btn" data-target="home-screen">← 戻る</button>
+                    <div class="essay-progress" id="essay-progress">テーマ 1/6</div>
+                </div>
+
+                <div class="essay-container">
+                    <div class="essay-title-badge" id="essay-category-badge">第1章</div>
+                    <h2 class="essay-theme-title" id="essay-title">財務会計の機能</h2>
+
+                    <!-- Step 1: 楽しく解説 (Lecture) -->
+                    <div id="essay-step-lecture" class="essay-step active">
+                        <div class="lecture-bubble-container" id="lecture-container">
+                            <!-- 会話形式の解説がここに挿入される -->
+                        </div>
+                        <div class="essay-actions">
+                            <button class="btn-primary" id="to-write-btn">わかった！記述へ進む →</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: 書かせる (Write) -->
+                    <div id="essay-step-write" class="essay-step hidden">
+                        <div class="essay-question-box">
+                            <h3 class="essay-q-label">Q. 論述問題</h3>
+                            <p class="essay-q-text" id="essay-question-text">ここに問題文が入ります</p>
+                        </div>
+
+                        <div class="essay-input-area">
+                            <textarea id="essay-answer-input" placeholder="ここに自分の言葉で説明を書こう（200字以内推奨）"></textarea>
+                            <div class="essay-tools">
+                                <button class="hint-toggle-btn" id="essay-hint-btn">💡 キーワードヒントを見る</button>
+                                <div class="essay-keywords hidden" id="essay-keywords">
+                                    <!-- キーワード -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="essay-actions">
+                            <button class="btn-secondary" id="back-to-lecture-btn">← 解説に戻る</button>
+                            <button class="btn-primary" id="submit-essay-btn">提出して採点</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: 解答・比較 (Result) -->
+                    <div id="essay-step-result" class="essay-step hidden">
+                        <div class="essay-comparison">
+                            <div class="your-answer-box">
+                                <h4>あなたの解答</h4>
+                                <p id="your-essay-display"></p>
+                            </div>
+                            <div class="model-answer-box">
+                                <h4>模範解答</h4>
+                                <p id="model-essay-display"></p>
+                            </div>
+                        </div>
+
+                        <div class="self-evaluation">
+                            <h4>自己採点</h4>
+                            <div class="eval-buttons">
+                                <button class="eval-btn" data-eval="3">😆 完璧！</button>
+                                <button class="eval-btn" data-eval="2">🙂 まあまあ</button>
+                                <button class="eval-btn" data-eval="1">🤔 要復習</button>
+                            </div>
+                        </div>
+
+                        <div class="essay-actions">
+                            <button class="btn-primary hidden" id="next-essay-btn">次のテーマへ →</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -348,6 +425,7 @@
         </div>
     </div>
 
+    <script src="data/essay_data.js"></script>
     <script src="data/questions_v2.js"></script>
     <script src="effects.js"></script>
     <script src="sounds.js"></script>
