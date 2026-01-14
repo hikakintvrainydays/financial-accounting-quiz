@@ -134,12 +134,20 @@
                     <button class="back-btn" data-target="home-screen">← 戻る</button>
                     <div class="quiz-info">
                         <span class="quiz-progress" id="quiz-progress">問題 1/10</span>
-                        <span class="quiz-score" id="quiz-score">スコア: 0</span>
+                        <!-- 〇✕カウント表示 -->
+                        <div class="ox-counter" id="ox-counter">
+                            <span class="ox-correct">〇<span id="correct-count">0</span></span>
+                            <span class="ox-incorrect">✕<span id="incorrect-count">0</span></span>
+                        </div>
                     </div>
                     <div class="quiz-timer" id="quiz-timer">
                         <span class="timer-icon">⏱️</span>
-                        <span class="timer-value">30</span>
+                        <span class="timer-value" id="timer-value">15</span>
                     </div>
+                </div>
+                <!-- タイムバー（画面下部） -->
+                <div class="time-bar-container">
+                    <div class="time-bar" id="time-bar"></div>
                 </div>
                 <div class="quiz-container">
                     <div class="quiz-chapter-badge" id="quiz-chapter-badge">第1章</div>
@@ -319,6 +327,25 @@
                 </div>
             </section>
         </main>
+    </div>
+
+
+    <!-- 問題数選択モーダル -->
+    <div id="question-count-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3 class="modal-title">📝 問題数を選択</h3>
+            <div class="question-count-options">
+                <button class="count-btn" data-count="5">5問</button>
+                <button class="count-btn" data-count="10">10問</button>
+                <button class="count-btn selected" data-count="15">15問</button>
+                <button class="count-btn" data-count="20">20問</button>
+                <button class="count-btn" data-count="all">全問</button>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" id="cancel-count-btn">キャンセル</button>
+                <button class="btn-primary" id="start-quiz-btn">スタート！</button>
+            </div>
+        </div>
     </div>
 
     <script src="data/questions_v2.js"></script>

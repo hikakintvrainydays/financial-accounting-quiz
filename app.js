@@ -21,9 +21,18 @@ const App = {
     sessionAnswers: [],
     currentStreak: 0,  // 連続正解カウンタ
 
+    // 〇✕カウンタ
+    correctCount: 0,
+    incorrectCount: 0,
+
+    // 選択された問題数（デフォルト15問）
+    selectedQuestionCount: 15,
+    pendingMode: null,  // モーダル表示中に保持するモード
+
     // タイマー関連
     timerInterval: null,
     timerValue: 15,
+    timerMax: 15,  // タイムバー計算用
 
     // 進捗データ（LocalStorageから読み込み）
     progress: {
@@ -33,7 +42,10 @@ const App = {
         questionStats: {},
         lastStudyDate: null,
         streakDays: 0
-    }
+    },
+
+    // 忘却曲線用の復習スケジュール（LocalStorageから読み込み）
+    reviewSchedule: {}
 };
 
 // ===========================================
@@ -42,6 +54,7 @@ const App = {
 document.addEventListener('DOMContentLoaded', async () => {
     // 進捗データの読み込み
     loadProgress();
+    loadReviewSchedule();  // 忘却曲線スケジュール読み込み
 
     // 問題データの読み込み
     await loadQuestions();
@@ -265,6 +278,9 @@ function setupEventListeners() {
 
     // 統計リセット
     document.getElementById('reset-stats-btn').addEventListener('click', resetStats);
+
+    // 問題数選択モーダル
+    setupQuestionCountModal();
 }
 
 function toggleTheme() {
@@ -292,14 +308,66 @@ function showScreen(screenId) {
 }
 
 // ===========================================
+// 問題数選択モーダル
+// ===========================================
+function setupQuestionCountModal() {
+    const modal = document.getElementById('question-count-modal');
+    const countBtns = document.querySelectorAll('.count-btn');
+    const cancelBtn = document.getElementById('cancel-count-btn');
+    const startBtn = document.getElementById('start-quiz-btn');
+
+    // 問題数ボタンのクリック
+    countBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            countBtns.forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            App.selectedQuestionCount = btn.dataset.count === 'all' ? 'all' : parseInt(btn.dataset.count);
+        });
+    });
+
+    // キャンセルボタン
+    cancelBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        modal.classList.add('hidden');
+        App.pendingMode = null;
+    });
+
+    // スタートボタン
+    startBtn.addEventListener('click', () => {
+        modal.classList.remove('active');
+        modal.classList.add('hidden');
+        if (App.pendingMode) {
+            actuallyStartMode(App.pendingMode);
+        }
+    });
+}
+
+function showQuestionCountModal(mode) {
+    App.pendingMode = mode;
+    const modal = document.getElementById('question-count-modal');
+    modal.classList.remove('hidden');
+    modal.classList.add('active');
+}
+
+// ===========================================
 // モード開始
 // ===========================================
 function startMode(mode) {
+    // 問題数選択モーダルを表示
+    showQuestionCountModal(mode);
+}
+
+function actuallyStartMode(mode) {
     App.currentMode = mode;
     App.currentIndex = 0;
     App.currentScore = 0;
+    App.correctCount = 0;
+    App.incorrectCount = 0;
     App.sessionStartTime = Date.now();
     App.sessionAnswers = [];
+
+    // 〇✕カウントをリセット
+    updateOXCounter();
 
     // モードに応じた問題をフィルタリング
     let filteredQuestions = [];
@@ -319,8 +387,10 @@ function startMode(mode) {
             break;
     }
 
-    // シャッフルして10問選択
-    App.currentQuestions = shuffleArray(filteredQuestions).slice(0, 10);
+    // シャッフルして選択された問題数分を取得
+    const shuffled = shuffleArray(filteredQuestions);
+    const count = App.selectedQuestionCount === 'all' ? shuffled.length : App.selectedQuestionCount;
+    App.currentQuestions = shuffled.slice(0, count);
 
     if (App.currentQuestions.length === 0) {
         alert('このモードの問題がありません');
@@ -381,7 +451,6 @@ function showQuizQuestion() {
 
     // 進捗表示
     document.getElementById('quiz-progress').textContent = `問題 ${App.currentIndex + 1}/${App.currentQuestions.length}`;
-    document.getElementById('quiz-score').textContent = `スコア: ${App.currentScore}`;
 
     // 章バッジ
     document.getElementById('quiz-chapter-badge').textContent = `第${question.chapter}章`;
@@ -448,6 +517,20 @@ function handleQuizAnswer(selectedIndex) {
 
 function showQuizFeedback(isCorrect, explanation, simpleExplanation) {
     const feedbackEl = document.getElementById('quiz-feedback');
+    const question = App.currentQuestions[App.currentIndex];
+
+    // 〇✕カウンタを更新
+    if (isCorrect) {
+        App.correctCount++;
+    } else {
+        App.incorrectCount++;
+    }
+    updateOXCounter();
+
+    // 忘却曲線スケジュールを更新
+    if (question && question.id) {
+        updateReviewSchedule(question.id, isCorrect);
+    }
 
     // 連続正解カウンタの更新
     if (isCorrect) {
@@ -521,12 +604,14 @@ function nextQuizQuestion() {
 // タイマー
 // ===========================================
 function startTimer() {
-    App.timerValue = 30;
+    App.timerValue = App.timerMax;
     updateTimerDisplay();
+    updateTimeBar();
 
     App.timerInterval = setInterval(() => {
         App.timerValue--;
         updateTimerDisplay();
+        updateTimeBar();
 
         if (App.timerValue <= 0) {
             stopTimer();
@@ -541,21 +626,54 @@ function stopTimer() {
         clearInterval(App.timerInterval);
         App.timerInterval = null;
     }
+    // タイムバーをリセット
+    const timeBar = document.getElementById('time-bar');
+    if (timeBar) {
+        timeBar.style.width = '100%';
+        timeBar.classList.remove('warning');
+    }
 }
 
 function updateTimerDisplay() {
-    const timerEl = document.querySelector('.timer-value');
+    const timerEl = document.getElementById('timer-value');
     if (timerEl) {
         timerEl.textContent = App.timerValue;
 
         // 残り時間に応じて色を変更
         const timerContainer = document.getElementById('quiz-timer');
-        if (App.timerValue <= 10) {
+        if (App.timerValue <= 5) {
             timerContainer.style.background = 'var(--error)';
+        } else if (App.timerValue <= 10) {
+            timerContainer.style.background = 'var(--warning)';
         } else {
             timerContainer.style.background = 'var(--accent-gradient)';
         }
     }
+}
+
+function updateTimeBar() {
+    const timeBar = document.getElementById('time-bar');
+    if (timeBar) {
+        const percentage = (App.timerValue / App.timerMax) * 100;
+        timeBar.style.width = percentage + '%';
+
+        // 30%以下で点滅
+        if (percentage <= 30) {
+            timeBar.classList.add('warning');
+        } else {
+            timeBar.classList.remove('warning');
+        }
+    }
+}
+
+// ===========================================
+// 〇✕カウンター
+// ===========================================
+function updateOXCounter() {
+    const correctEl = document.getElementById('correct-count');
+    const incorrectEl = document.getElementById('incorrect-count');
+    if (correctEl) correctEl.textContent = App.correctCount;
+    if (incorrectEl) incorrectEl.textContent = App.incorrectCount;
 }
 
 // ===========================================
@@ -1104,4 +1222,94 @@ function shuffleArray(array) {
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
+}
+
+// ===========================================
+// 忘却曲線（間隔反復）
+// ===========================================
+// 復習間隔（日数）: 正解するたびに延長、不正解でリセット
+const REVIEW_INTERVALS = [1, 3, 7, 14, 30]; // 1日後、3日後、7日後、14日後、30日後
+
+function loadReviewSchedule() {
+    const saved = localStorage.getItem('reviewSchedule');
+    if (saved) {
+        App.reviewSchedule = JSON.parse(saved);
+    }
+}
+
+function saveReviewSchedule() {
+    localStorage.setItem('reviewSchedule', JSON.stringify(App.reviewSchedule));
+}
+
+/**
+ * 復習スケジュールを更新
+ * @param {string} questionId - 問題ID
+ * @param {boolean} isCorrect - 正解したかどうか
+ */
+function updateReviewSchedule(questionId, isCorrect) {
+    const now = Date.now();
+    const schedule = App.reviewSchedule[questionId] || { level: 0, nextReview: now };
+
+    if (isCorrect) {
+        // 正解: 次のレベルへ（最大でREVIEW_INTERVALS.length - 1）
+        schedule.level = Math.min(schedule.level + 1, REVIEW_INTERVALS.length - 1);
+    } else {
+        // 不正解: レベル0に戻る
+        schedule.level = 0;
+    }
+
+    // 次の復習日を計算
+    const daysUntilNext = REVIEW_INTERVALS[schedule.level];
+    schedule.nextReview = now + (daysUntilNext * 24 * 60 * 60 * 1000);
+    schedule.lastReviewed = now;
+
+    App.reviewSchedule[questionId] = schedule;
+    saveReviewSchedule();
+}
+
+/**
+ * 復習が必要な問題を取得
+ * @returns {Array} 復習が必要な問題の配列
+ */
+function getQuestionsForReview() {
+    const now = Date.now();
+    const questionsNeedingReview = [];
+
+    App.questions.forEach(question => {
+        const schedule = App.reviewSchedule[question.id];
+        // スケジュールがない（未回答）または復習時期が来ている
+        if (!schedule || schedule.nextReview <= now) {
+            questionsNeedingReview.push(question);
+        }
+    });
+
+    return questionsNeedingReview;
+}
+
+/**
+ * 復習モードを開始
+ */
+function startReviewMode() {
+    const reviewQuestions = getQuestionsForReview();
+
+    if (reviewQuestions.length === 0) {
+        alert('🎉 復習する問題がありません！\n素晴らしい学習状況です。');
+        return;
+    }
+
+    App.currentMode = 'quiz';
+    App.currentIndex = 0;
+    App.currentScore = 0;
+    App.correctCount = 0;
+    App.incorrectCount = 0;
+    App.sessionStartTime = Date.now();
+    App.sessionAnswers = [];
+    updateOXCounter();
+
+    // 復習問題をシャッフルして取得
+    const count = App.selectedQuestionCount === 'all' ? reviewQuestions.length : Math.min(App.selectedQuestionCount, reviewQuestions.length);
+    App.currentQuestions = shuffleArray(reviewQuestions).slice(0, count);
+
+    showScreen('quiz-screen');
+    showQuizQuestion();
 }
