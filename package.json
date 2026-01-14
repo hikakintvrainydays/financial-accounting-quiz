@@ -1,0 +1,12 @@
+{
+    "name": "financial-accounting-quiz",
+    "version": "1.0.0",
+    "description": "Financial Accounting Learning Site",
+    "scripts": {
+        "start": "serve ."
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "vercel": "latest"
+    }
+}

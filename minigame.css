@@ -1,0 +1,306 @@
+/* ===========================================
+   ミニゲーム用CSS
+   財務会計学習サイト
+=========================================== */
+
+/* ボーナス通知 */
+.bonus-notification {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.bonus-notification.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.bonus-notification-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem 3rem;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    animation: bonusPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes bonusPop {
+    0% {
+        transform: scale(0) rotate(-10deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+    }
+}
+
+.bonus-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: bonusBounce 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes bonusBounce {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-10px);
+    }
+}
+
+.bonus-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.bonus-desc {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+}
+
+.bonus-play-btn {
+    background: linear-gradient(135deg, #f7d44c 0%, #eb9c00 100%);
+    color: #333;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-right: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.bonus-play-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(247, 212, 76, 0.5);
+}
+
+.bonus-skip-btn {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.bonus-skip-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
+}
+
+/* ミニゲームコンテナ */
+.mini-game-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    z-index: 25000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.mini-game-container.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.mini-game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.mini-game-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.mini-game-score,
+.mini-game-time {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.mini-game-score span {
+    color: #f7d44c;
+}
+
+.mini-game-time span {
+    color: #ff6b6b;
+}
+
+.mini-game-area {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.mini-game-instruction {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+/* 落ちてくるコイン */
+.game-coin {
+    position: absolute;
+    top: -50px;
+    font-size: 2.5rem;
+    cursor: pointer;
+    animation: coinFallGame linear forwards;
+    user-select: none;
+    transition: transform 0.1s;
+    z-index: 10;
+}
+
+.game-coin:hover {
+    transform: scale(1.2);
+}
+
+.game-coin:active {
+    transform: scale(0.9);
+}
+
+@keyframes coinFallGame {
+    from {
+        top: -50px;
+        transform: rotate(0deg);
+    }
+
+    to {
+        top: 100vh;
+        transform: rotate(720deg);
+    }
+}
+
+/* ポイントポップアップ */
+.point-popup {
+    position: absolute;
+    color: #f7d44c;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(247, 212, 76, 0.8);
+    animation: pointPop 0.5s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes pointPop {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-50px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* ゲーム結果 */
+.game-result {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    animation: resultPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes resultPop {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.result-emoji {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+.result-message {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.result-score {
+    font-size: 1.5rem;
+    color: #f7d44c;
+    margin-bottom: 2rem;
+}
+
+.game-result .btn-primary {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+    .bonus-notification-content {
+        padding: 1.5rem 2rem;
+        margin: 1rem;
+    }
+
+    .bonus-title {
+        font-size: 1.5rem;
+    }
+
+    .bonus-play-btn {
+        display: block;
+        width: 100%;
+        margin: 0 0 1rem;
+    }
+
+    .bonus-skip-btn {
+        display: block;
+        width: 100%;
+    }
+
+    .game-coin {
+        font-size: 2rem;
+    }
+
+    .result-emoji {
+        font-size: 4rem;
+    }
+
+    .result-message {
+        font-size: 1.5rem;
+    }
+}

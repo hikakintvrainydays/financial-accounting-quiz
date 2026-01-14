@@ -1,0 +1,632 @@
+{
+  "meta": {
+    "title": "財務会計総論 定期試験対策",
+    "version": "1.0",
+    "lastUpdated": "2026-01-14"
+  },
+  "chapters": [
+    {
+      "id": 1,
+      "title": "会計の概要と財務会計の機能",
+      "topics": ["会計の定義", "財務会計と管理会計", "トライアングル体制"]
+    },
+    {
+      "id": 2,
+      "title": "利益計算の仕組み",
+      "topics": ["損益法と財産法", "収益費用観と資産負債観", "クリーン・サープラス関係"]
+    },
+    {
+      "id": 3,
+      "title": "会計公準・原則・基準",
+      "topics": ["会計公準", "一般原則7つ", "GAAP"]
+    },
+    {
+      "id": 4,
+      "title": "利益測定と資産評価の基礎概念",
+      "topics": ["取得原価主義vs時価主義", "発生主義と実現主義", "費用収益対応の原則"]
+    },
+    {
+      "id": 5,
+      "title": "金融資産とキャッシュ・フロー",
+      "topics": ["有価証券の4分類", "キャッシュ・フロー計算書", "間接法"]
+    },
+    {
+      "id": 6,
+      "title": "売上高と売上債権",
+      "topics": ["収益認識5ステップ", "工事進行基準", "貸倒引当金"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1-1",
+      "chapter": 1,
+      "type": "fill-blank",
+      "difficulty": "basic",
+      "topic": "会計の定義",
+      "question": "会計とは、特定の経済主体が営む経済活動について、貨幣額を用いて【①】、【②】、【③】、【④】し、情報を分析・解釈するシステムである。",
+      "blanks": ["認識", "測定", "記録", "報告"],
+      "englishTerms": {
+        "認識": "Recognition",
+        "測定": "Measurement",
+        "記録": "Recording",
+        "報告": "Reporting"
+      },
+      "hint": "会計プロセスの4段階を順番に"
+    },
+    {
+      "id": "q1-2",
+      "chapter": 1,
+      "type": "quiz",
+      "difficulty": "basic",
+      "topic": "財務会計と管理会計",
+      "question": "財務会計の主な情報利用者は誰か？",
+      "options": ["内部の管理者", "外部の利害関係者", "従業員のみ", "国税庁のみ"],
+      "answer": 1,
+      "explanation": "財務会計は株主、債権者、税務署などの外部（External）の利害関係者に情報を提供する。管理会計は内部（Internal）の管理者向け。"
+    },
+    {
+      "id": "q1-3",
+      "chapter": 1,
+      "type": "quiz",
+      "difficulty": "basic",
+      "topic": "財務会計と管理会計",
+      "question": "財務会計が提供する情報の性質として正しいのはどれか？",
+      "options": ["未来的情報中心", "過去の情報中心", "非財務情報中心", "セグメント別情報中心"],
+      "answer": 1,
+      "explanation": "財務会計は過去（Past）の情報を扱う。未来（Future）の情報は管理会計が扱う。"
+    },
+    {
+      "id": "q1-4",
+      "chapter": 1,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "株式会社と責任",
+      "question": "経営者が株主から預かった資金を適切に管理・運用する責任を何というか？",
+      "options": ["説明責任", "受託責任", "監査責任", "情報提供責任"],
+      "answer": 1,
+      "explanation": "受託責任（Stewardship Responsibility）は資金を預かって管理・運用する責任。説明責任（Accountability）はその結果を報告する責任。"
+    },
+    {
+      "id": "q1-5",
+      "chapter": 1,
+      "type": "fill-blank",
+      "difficulty": "intermediate",
+      "topic": "トライアングル体制",
+      "question": "日本の企業会計を規制する3つの法律：【①】（債権者保護）、【②】（投資家保護）、【③】（課税の公平性）",
+      "blanks": ["会社法", "金融商品取引法", "法人税法"],
+      "hint": "それぞれの目的を思い出そう"
+    },
+    {
+      "id": "q1-6",
+      "chapter": 1,
+      "type": "flashcard",
+      "difficulty": "basic",
+      "topic": "英語用語",
+      "front": "Recognition",
+      "back": "認識（取引が発生したことを認める）"
+    },
+    {
+      "id": "q1-7",
+      "chapter": 1,
+      "type": "flashcard",
+      "difficulty": "basic",
+      "topic": "英語用語",
+      "front": "Measurement",
+      "back": "測定（金額を算定する）"
+    },
+    {
+      "id": "q1-8",
+      "chapter": 1,
+      "type": "flashcard",
+      "difficulty": "basic",
+      "topic": "英語用語",
+      "front": "Accountability",
+      "back": "説明責任（管理・運用の結果を報告する責任）"
+    },
+    {
+      "id": "q1-9",
+      "chapter": 1,
+      "type": "flashcard",
+      "difficulty": "basic",
+      "topic": "英語用語",
+      "front": "Stewardship Responsibility",
+      "back": "受託責任（委任された資金を適切に管理・運用する責任）"
+    },
+    {
+      "id": "q2-1",
+      "chapter": 2,
+      "type": "fill-blank",
+      "difficulty": "basic",
+      "topic": "利益計算",
+      "question": "損益法の計算式：【①】－【②】＝ 当期純利益",
+      "blanks": ["収益", "費用"],
+      "hint": "P/Lの基本式"
+    },
+    {
+      "id": "q2-2",
+      "chapter": 2,
+      "type": "fill-blank",
+      "difficulty": "basic",
+      "topic": "利益計算",
+      "question": "財産法の計算式：【①】－【②】＝ 当期純利益",
+      "blanks": ["期末資本", "期首資本"],
+      "hint": "B/Sの純資産の増減"
+    },
+    {
+      "id": "q2-3",
+      "chapter": 2,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "利益観",
+      "question": "利益を「企業の効率の測定値」とみなす考え方はどれか？",
+      "options": ["資産負債観", "収益費用観", "現金主義", "発生主義"],
+      "answer": 1,
+      "explanation": "収益費用観（Revenue-Expense View）は利益を効率の測定値とみなし、費用収益対応を重視する。資産負債観は利益を正味資源の増分とみなす。"
+    },
+    {
+      "id": "q2-4",
+      "chapter": 2,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "利益観",
+      "question": "利益を「正味資源（資産－負債）の増分」とみなす考え方はどれか？",
+      "options": ["収益費用観", "資産負債観", "動態論", "静態論"],
+      "answer": 1,
+      "explanation": "資産負債観（Asset-Liability View）では、資産と負債の定義が先にあり、収益・費用は派生概念となる。"
+    },
+    {
+      "id": "q2-5",
+      "chapter": 2,
+      "type": "quiz",
+      "difficulty": "advanced",
+      "topic": "クリーン・サープラス",
+      "question": "クリーン・サープラス関係が崩れる（ダーティ・サープラス）原因として正しいのはどれか？",
+      "options": ["売上高の計上", "減価償却費の計上", "評価差額の純資産直入", "配当金の支払い"],
+      "answer": 2,
+      "explanation": "その他有価証券評価差額金などを、P/Lを通さずにB/Sの純資産に直入すると、クリーン・サープラス関係が崩れる。"
+    },
+    {
+      "id": "q2-6",
+      "chapter": 2,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "動態論",
+      "question": "シュマーレンバッハの動態論において、貸借対照表（B/S）の本質的役割は何か？",
+      "options": ["財産状態の表示", "損益計算の連結環", "資金繰りの把握", "税金計算の基礎"],
+      "answer": 1,
+      "explanation": "動態論では、B/Sは期間損益計算の連結環（未解決項目の収容場所）として位置づけられる。"
+    },
+    {
+      "id": "q2-7",
+      "chapter": 2,
+      "type": "flashcard",
+      "difficulty": "intermediate",
+      "topic": "英語用語",
+      "front": "Clean Surplus Relation",
+      "back": "クリーン・サープラス関係（期末株主資本＝期首株主資本＋当期純利益－配当）"
+    },
+    {
+      "id": "q2-8",
+      "chapter": 2,
+      "type": "flashcard",
+      "difficulty": "intermediate",
+      "topic": "英語用語",
+      "front": "Articulation",
+      "back": "連携（P/LとB/Sが数値的に整合している関係）"
+    },
+    {
+      "id": "q3-1",
+      "chapter": 3,
+      "type": "fill-blank",
+      "difficulty": "basic",
+      "topic": "会計公準",
+      "question": "3つの会計公準：【①】公準（企業と所有者の分離）、【②】公準（事業の継続性）、【③】公準（貨幣額での測定）",
+      "blanks": ["企業実体", "継続企業", "貨幣的評価"],
+      "englishTerms": {
+        "企業実体": "Business Entity",
+        "継続企業": "Going Concern",
+        "貨幣的評価": "Monetary Postulate"
+      },
+      "hint": "会計が成立するための3つの前提条件"
+    },
+    {
+      "id": "q3-2",
+      "chapter": 3,
+      "type": "quiz",
+      "difficulty": "basic",
+      "topic": "一般原則",
+      "question": "企業会計原則の7つの一般原則のうち、最高規範（最上位の原則）はどれか？",
+      "options": ["正規の簿記の原則", "真実性の原則", "継続性の原則", "保守主義の原則"],
+      "answer": 1,
+      "explanation": "真実性の原則は他のすべての原則の上位に位置する最重要原則。ただし「相対的真実」（ルールに従った結果としての真実）を意味する。"
+    },
+    {
+      "id": "q3-3",
+      "chapter": 3,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "一般原則",
+      "question": "「資本取引と損益取引を明瞭に区別し、資本剰余金と利益剰余金を混同してはならない」という原則は？",
+      "options": ["明瞭性の原則", "継続性の原則", "資本・利益区別の原則", "単一性の原則"],
+      "answer": 2,
+      "explanation": "資本・利益区別の原則は、企業の元手（資本）と稼いだ成果（利益）を分け、タコ配当を防止し資本維持を図る。"
+    },
+    {
+      "id": "q3-4",
+      "chapter": 3,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "一般原則",
+      "question": "「企業の財政に不利な影響を及ぼす可能性がある場合には、これに備えて適当に健全な会計処理をしなければならない」という原則は？",
+      "options": ["真実性の原則", "継続性の原則", "保守主義の原則", "明瞭性の原則"],
+      "answer": 2,
+      "explanation": "保守主義の原則（Conservatism）は「利益は控えめに、損失は早めに」という慎重な判断を行う原則。"
+    },
+    {
+      "id": "q3-5",
+      "chapter": 3,
+      "type": "quiz",
+      "difficulty": "advanced",
+      "topic": "一般原則",
+      "question": "「実質一元・形式多元」を求め、二重帳簿を禁止する原則は？",
+      "options": ["真実性の原則", "正規の簿記の原則", "明瞭性の原則", "単一性の原則"],
+      "answer": 3,
+      "explanation": "単一性の原則は、提出先により書式は変わっても元となる会計記録は一つであることを求める。銀行用と税務署用で異なる帳簿を作ることは許されない。"
+    },
+    {
+      "id": "q3-6",
+      "chapter": 3,
+      "type": "flashcard",
+      "difficulty": "basic",
+      "topic": "英語用語",
+      "front": "Going Concern",
+      "back": "継続企業（企業活動が半永久的に続くと仮定）"
+    },
+    {
+      "id": "q3-7",
+      "chapter": 3,
+      "type": "flashcard",
+      "difficulty": "basic",
+      "topic": "英語用語",
+      "front": "GAAP",
+      "back": "Generally Accepted Accounting Principles（一般に公正妥当と認められた企業会計原則）"
+    },
+    {
+      "id": "q3-8",
+      "chapter": 3,
+      "type": "flashcard",
+      "difficulty": "intermediate",
+      "topic": "英語用語",
+      "front": "Conservatism",
+      "back": "保守主義（将来の危険に備えて慎重な判断を行う原則）"
+    },
+    {
+      "id": "q4-1",
+      "chapter": 4,
+      "type": "quiz",
+      "difficulty": "basic",
+      "topic": "資産評価",
+      "question": "資産を取得した際の支出額（買った値段）で評価する方法は？",
+      "options": ["時価主義", "取得原価主義", "再調達原価", "正味実現可能価額"],
+      "answer": 1,
+      "explanation": "取得原価主義（Acquisition Cost Basis）は客観性と検証可能性に優れ、現在の制度でも基本原則。"
+    },
+    {
+      "id": "q4-2",
+      "chapter": 4,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "収益認識",
+      "question": "売上高（収益）の認識に適用される原則として最も適切なのはどれか？",
+      "options": ["現金主義", "発生主義", "実現主義", "費用収益対応の原則"],
+      "answer": 2,
+      "explanation": "収益の認識には実現主義（Realization Basis）を適用。財貨の移転＋貨幣性資産の受領の2要件を満たす必要がある。"
+    },
+    {
+      "id": "q4-3",
+      "chapter": 4,
+      "type": "fill-blank",
+      "difficulty": "intermediate",
+      "topic": "収益認識",
+      "question": "実現主義の2つの要件：①【①】の移転・役務の提供、②【②】の受領",
+      "blanks": ["財貨", "貨幣性資産"],
+      "hint": "モノを渡して、お金（または売掛金）をもらう"
+    },
+    {
+      "id": "q4-4",
+      "chapter": 4,
+      "type": "quiz",
+      "difficulty": "basic",
+      "topic": "費用認識",
+      "question": "費用の認識に原則として適用される基準は？",
+      "options": ["現金主義", "発生主義", "実現主義", "回収基準"],
+      "answer": 1,
+      "explanation": "費用は発生主義（Accrual Basis）で認識する。経済的価値の消費事実に基づいて計上する。"
+    },
+    {
+      "id": "q4-5",
+      "chapter": 4,
+      "type": "flashcard",
+      "difficulty": "intermediate",
+      "topic": "英語用語",
+      "front": "Matching Principle",
+      "back": "費用収益対応の原則（収益獲得のための努力と成果を対応させる）"
+    },
+    {
+      "id": "q4-6",
+      "chapter": 4,
+      "type": "flashcard",
+      "difficulty": "intermediate",
+      "topic": "英語用語",
+      "front": "Net Realizable Value",
+      "back": "正味実現可能価額（今売ったらいくらになるか＝売却市場価格－見積売却経費）"
+    },
+    {
+      "id": "q5-1",
+      "chapter": 5,
+      "type": "quiz",
+      "difficulty": "basic",
+      "topic": "現金同等物",
+      "question": "キャッシュ・フロー計算書における現金同等物の基準は？",
+      "options": ["取得日から1か月以内", "取得日から3か月以内", "取得日から6か月以内", "取得日から1年以内"],
+      "answer": 1,
+      "explanation": "現金同等物は「取得日から満期日までの期間が3か月以内」の短期投資。"
+    },
+    {
+      "id": "q5-2",
+      "chapter": 5,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "有価証券",
+      "question": "売買目的有価証券の期末評価基準と、評価差額の取扱いは？",
+      "options": ["取得原価・計上しない", "時価・当期損益(P/L)", "時価・純資産直入(B/S)", "償却原価・利息調整"],
+      "answer": 1,
+      "explanation": "売買目的有価証券は時価評価し、評価差額は当期の損益（P/L）に計上する。"
+    },
+    {
+      "id": "q5-3",
+      "chapter": 5,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "有価証券",
+      "question": "その他有価証券（持ち合い株式など）の期末評価基準と、評価差額の取扱いは？",
+      "options": ["取得原価・計上しない", "時価・当期損益(P/L)", "時価・純資産直入(B/S)", "償却原価・利息調整"],
+      "answer": 2,
+      "explanation": "その他有価証券は時価評価し、評価差額は純資産の部（B/S）に直入する（その他有価証券評価差額金）。"
+    },
+    {
+      "id": "q5-4",
+      "chapter": 5,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "有価証券",
+      "question": "満期保有目的債券の評価に用いる方法は？",
+      "options": ["時価法", "取得原価法", "償却原価法", "低価法"],
+      "answer": 2,
+      "explanation": "満期保有目的債券は償却原価法（Amortized Cost Method）を用いる。取得価額と額面の差額を満期に向けて調整する。"
+    },
+    {
+      "id": "q5-5",
+      "chapter": 5,
+      "type": "quiz",
+      "difficulty": "basic",
+      "topic": "有価証券",
+      "question": "子会社株式・関連会社株式の期末評価基準は？",
+      "options": ["時価", "取得原価", "償却原価", "正味実現可能価額"],
+      "answer": 1,
+      "explanation": "子会社株式・関連会社株式は取得原価で評価する（支配・影響力行使目的のため時価評価しない）。"
+    },
+    {
+      "id": "q5-6",
+      "chapter": 5,
+      "type": "fill-blank",
+      "difficulty": "basic",
+      "topic": "キャッシュ・フロー",
+      "question": "キャッシュ・フロー計算書の3区分：【①】活動、【②】活動、【③】活動",
+      "blanks": ["営業", "投資", "財務"],
+      "hint": "本業・投資・資金調達"
+    },
+    {
+      "id": "q5-7",
+      "chapter": 5,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "キャッシュ・フロー",
+      "question": "間接法において、減価償却費はどう調整するか？",
+      "options": ["税引前当期純利益から減算", "税引前当期純利益に加算", "営業CFから除外", "投資CFに計上"],
+      "answer": 1,
+      "explanation": "減価償却費はP/Lで費用として引かれているが、現金は出ていないため、税引前当期純利益に加算して戻す。"
+    },
+    {
+      "id": "q5-8",
+      "chapter": 5,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "キャッシュ・フロー",
+      "question": "間接法において、売掛金が増加した場合はどう調整するか？",
+      "options": ["加算する", "減算する", "調整不要", "投資CFに計上"],
+      "answer": 1,
+      "explanation": "売掛金増加＝売上は計上されたが現金は入っていない。そのため、税引前当期純利益から減算する。"
+    },
+    {
+      "id": "q5-9",
+      "chapter": 5,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "キャッシュ・フロー",
+      "question": "間接法において、買掛金が増加した場合はどう調整するか？",
+      "options": ["加算する", "減算する", "調整不要", "財務CFに計上"],
+      "answer": 0,
+      "explanation": "買掛金増加＝仕入は計上されたが現金は出ていない。そのため、税引前当期純利益に加算する。"
+    },
+    {
+      "id": "q5-10",
+      "chapter": 5,
+      "type": "calculation",
+      "difficulty": "advanced",
+      "topic": "キャッシュ・フロー計算",
+      "question": "次の条件で営業CFを計算せよ：税引前当期純利益 1,000万円、減価償却費 200万円、売掛金増加 100万円、買掛金増加 50万円",
+      "formula": "営業CF = 税引前当期純利益 + 減価償却費 - 売掛金増加 + 買掛金増加",
+      "answer": 1150,
+      "unit": "万円",
+      "explanation": "1,000 + 200 - 100 + 50 = 1,150万円"
+    },
+    {
+      "id": "q5-11",
+      "chapter": 5,
+      "type": "flashcard",
+      "difficulty": "intermediate",
+      "topic": "英語用語",
+      "front": "Amortized Cost",
+      "back": "償却原価（債券の取得価額と額面の差額を満期に向けて調整した価額）"
+    },
+    {
+      "id": "q5-12",
+      "chapter": 5,
+      "type": "flashcard",
+      "difficulty": "basic",
+      "topic": "英語用語",
+      "front": "Cash Equivalents",
+      "back": "現金同等物（容易に換金可能で価値変動リスクが僅少な短期投資）"
+    },
+    {
+      "id": "q5-13",
+      "chapter": 5,
+      "type": "flashcard",
+      "difficulty": "intermediate",
+      "topic": "英語用語",
+      "front": "Free Cash Flow",
+      "back": "フリー・キャッシュ・フロー（営業CF + 投資CF = 自由に使える資金）"
+    },
+    {
+      "id": "q6-1",
+      "chapter": 6,
+      "type": "fill-blank",
+      "difficulty": "intermediate",
+      "topic": "収益認識",
+      "question": "収益認識の5ステップ：①【①】の識別、②【②】の識別、③【③】の算定、④取引価格の【④】、⑤収益の【⑤】",
+      "blanks": ["契約", "履行義務", "取引価格", "配分", "認識"],
+      "hint": "新しい収益認識会計基準の基本フレームワーク"
+    },
+    {
+      "id": "q6-2",
+      "chapter": 6,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "収益認識",
+      "question": "新しい収益認識会計基準において、収益を認識する基本的な考え方は？",
+      "options": ["現金の受領時", "実現主義（財貨の移転時）", "支配の移転時", "契約締結時"],
+      "answer": 2,
+      "explanation": "新基準では「支配の移転（Transfer of Control）」時に収益を認識する。従来の実現主義から変更された。"
+    },
+    {
+      "id": "q6-3",
+      "chapter": 6,
+      "type": "quiz",
+      "difficulty": "advanced",
+      "topic": "収益認識",
+      "question": "製品販売と2年間の保守サービスをセットで12,000円で販売。独立販売価格が製品10,000円、保守5,000円の場合、製品への配分額は？",
+      "options": ["6,000円", "8,000円", "10,000円", "12,000円"],
+      "answer": 1,
+      "explanation": "12,000 × (10,000÷15,000) = 8,000円。独立販売価格の比率（2:1）で按分する。"
+    },
+    {
+      "id": "q6-4",
+      "chapter": 6,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "収益認識",
+      "question": "代金を受け取ったが、まだサービスを提供していない部分はB/Sのどの勘定科目に計上するか？",
+      "options": ["売上高", "売掛金", "契約負債", "前払費用"],
+      "answer": 2,
+      "explanation": "契約負債（Contract Liability）は前受金に近い性質で、将来サービスを提供する義務を示す負債科目。"
+    },
+    {
+      "id": "q6-5",
+      "chapter": 6,
+      "type": "calculation",
+      "difficulty": "advanced",
+      "topic": "工事進行基準",
+      "question": "工事契約価額1,000万円、見積総原価800万円、当期発生原価320万円の場合、当期の売上高は？",
+      "formula": "当期売上高 = 契約価額 × (当期発生原価 ÷ 見積総原価)",
+      "answer": 400,
+      "unit": "万円",
+      "explanation": "進捗度 = 320÷800 = 40%、売上高 = 1,000 × 40% = 400万円"
+    },
+    {
+      "id": "q6-6",
+      "chapter": 6,
+      "type": "quiz",
+      "difficulty": "intermediate",
+      "topic": "貸倒引当金",
+      "question": "経営状態に重大な問題がない一般債権に対する貸倒見積高の算定方法は？",
+      "options": ["財務内容評価法", "キャッシュ・フロー見積法", "貸倒実績率法", "担保評価法"],
+      "answer": 2,
+      "explanation": "一般債権には貸倒実績率法（過去の貸倒れ実績率を乗じる）を用いる。"
+    },
+    {
+      "id": "q6-7",
+      "chapter": 6,
+      "type": "quiz",
+      "difficulty": "advanced",
+      "topic": "貸倒引当金",
+      "question": "経営破綻または実質的に破綻している債務者に対する債権（破産更生債権等）の貸倒見積高の算定方法は？",
+      "options": ["貸倒実績率法", "キャッシュ・フロー見積法", "財務内容評価法（担保控除後全額引当）", "時価評価法"],
+      "answer": 2,
+      "explanation": "破産更生債権等は財務内容評価法を用い、債権額から担保・保証処分見込額を引いた残額を全額引当する。"
+    },
+    {
+      "id": "q6-8",
+      "chapter": 6,
+      "type": "flashcard",
+      "difficulty": "intermediate",
+      "topic": "英語用語",
+      "front": "Performance Obligation",
+      "back": "履行義務（顧客に対する約束単位＝財・サービスの移転義務）"
+    },
+    {
+      "id": "q6-9",
+      "chapter": 6,
+      "type": "flashcard",
+      "difficulty": "intermediate",
+      "topic": "英語用語",
+      "front": "Contract Liability",
+      "back": "契約負債（代金は受け取ったが、まだサービスを提供していない部分）"
+    },
+    {
+      "id": "q6-10",
+      "chapter": 6,
+      "type": "flashcard",
+      "difficulty": "advanced",
+      "topic": "英語用語",
+      "front": "Transfer of Control",
+      "back": "支配の移転（新収益認識基準における収益認識のタイミング）"
+    }
+  ],
+  "examFocusAreas": [
+    {
+      "id": "cf",
+      "title": "キャッシュ・フロー計算書",
+      "description": "営業CFの間接法計算、3区分の理解",
+      "priority": "highest"
+    },
+    {
+      "id": "securities",
+      "title": "有価証券の評価",
+      "description": "4分類と評価基準、特に持ち合い株式",
+      "priority": "highest"
+    },
+    {
+      "id": "terms",
+      "title": "会計用語",
+      "description": "日本語と英語の対応",
+      "priority": "high"
+    },
+    {
+      "id": "revenue",
+      "title": "収益認識基準",
+      "description": "5ステップ、工事進行基準の計算",
+      "priority": "high"
+    }
+  ]
+}
